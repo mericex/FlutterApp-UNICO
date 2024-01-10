@@ -10,6 +10,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: HomePage(),
+      theme: ThemeData(
+        primarySwatch: Colors.grey,
+      ),
     );
   }
 }
@@ -27,25 +30,40 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 16.0),
+              // padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+              padding: const EdgeInsets.symmetric(vertical: 25.0),
               child: Image.asset(
                 'assets/images/logo.png',
                 width: 300,
                 height: 150,
               ),
             ),
-            SizedBox(height: 20),
+            const Text(
+              'Connect, Collaborate, Thrive \n Your Campus Life Simplified ',
+              style: TextStyle(
+                fontSize: 22,
+                color: Colors.grey,
+              ),
+            ),
+            const SizedBox(
+              height: 50.0, // Adjust the value as needed
+            ),
             ElevatedButton(
               onPressed: () {
-                print('News');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NewsPage()),
+                );
               },
               style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.black45),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                 minimumSize: MaterialStateProperty.all<Size>(
-                    Size(200, 50)), // Change width and height as needed
+                    const Size(200, 50)), // Change width and height as needed
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),
-                    side: const BorderSide(color: Colors.grey, width: 5.0),
                   ),
                 ),
               ),
@@ -57,13 +75,15 @@ class HomePage extends StatelessWidget {
                 print('Bulletin');
               },
               style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.black45),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                 minimumSize: MaterialStateProperty.all<Size>(
                     Size(200, 50)), // Change width and height as needed
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
                         15.0), // Adjust border radius as desired
-                    side: const BorderSide(color: Colors.grey, width: 5.0),
                   ),
                 ),
               ),
@@ -75,12 +95,14 @@ class HomePage extends StatelessWidget {
                 print('Community');
               },
               style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.black45),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                 minimumSize: MaterialStateProperty.all<Size>(
                     Size(200, 50)), // Change width and height as needed
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),
-                    side: const BorderSide(color: Colors.grey, width: 5.0),
                   ),
                 ),
               ),
@@ -88,6 +110,70 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: ButtonBar(
+          alignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              onPressed: () {
+                print('Homepage');
+              },
+              icon: Icon(Icons.home),
+            ),
+            IconButton(
+              onPressed: () {
+                print('Network');
+              },
+              icon: Icon(Icons.people),
+            ),
+            IconButton(
+              onPressed: () {
+                print('Post');
+              },
+              icon: Icon(Icons.add),
+            ),
+            IconButton(
+              onPressed: () {
+                print('Notifications');
+              },
+              icon: Icon(Icons.notifications),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class NewsPage extends StatelessWidget {
+  final random = Random();
+
+  String generateRandomSentence() {
+    const letters = 'abcdefghijklmnopqrstuvwxyz';
+    return List.generate(10, (index) => letters[random.nextInt(letters.length)])
+        .join();
+  }
+
+  List<String> generateRandomNews() {
+    return List.generate(
+        10, (index) => 'News ${index + 1}: ${generateRandomSentence()}');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.grey,
+        title: Text('News'),
+      ),
+      body: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(generateRandomNews()[index]),
+          );
+        },
       ),
       bottomNavigationBar: BottomAppBar(
         child: ButtonBar(
