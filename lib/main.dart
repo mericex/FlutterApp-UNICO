@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'profile_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -123,7 +124,10 @@ class HomePage extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                print('Network');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                );
               },
               icon: Icon(Icons.people),
             ),
